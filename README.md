@@ -1,136 +1,99 @@
-# Shashwat Solanki — Personal Portfolio
+# Shashwat Solanki — Portfolio
 
-A motion-driven, full-stack personal portfolio built to showcase software projects, product-building skills, and real-world deployment experience.
+This is my personal portfolio site. I built it to have somewhere to show the projects I've actually been working on, instead of keeping everything scattered across GitHub.
 
-## Live project
+The site is intentionally pretty visual and motion-heavy, but there is a real backend behind it too. The contact form stores enquiries in PostgreSQL and the project/capability data can be loaded from the API.
 
-- **Portfolio:** https://personal-portfolio-coyote-f495.vercel.app
-- **Backend API:** https://personal-portfolio-live-mvff.onrender.com
-- **GitHub:** https://github.com/shazzxz/personal-portfolio
+## Live
 
-## Technology stack
+- Portfolio: https://personal-portfolio-coyote-f495.vercel.app
+- API: https://personal-portfolio-live-mvff.onrender.com
+- GitHub: https://github.com/shazzxz/personal-portfolio
 
-| Layer | Technology |
-|---|---|
-| Frontend | React 19 + Vite + CSS |
-| Backend | Python + Flask |
-| Database | PostgreSQL |
-| Database hosting | Supabase |
-| Frontend deployment | Vercel |
-| Backend deployment | Render |
-| Version control | Git + GitHub |
+## What I used
 
-## Architecture
+**Frontend**
+- React
+- Vite
+- CSS
+- A bunch of custom scroll/motion effects
 
-```text
+**Backend**
+- Python
+- Flask
+- PostgreSQL
+- psycopg
+
+**Hosting**
+- Vercel for the frontend
+- Render for the Flask API
+- Supabase for PostgreSQL
+
+## Projects shown
+
+### SRGPC Certificate System
+A certificate management system I built for college work. It covers student requests, certificate generation, digital signatures, unique IDs, QR verification, downloads, and separate student/admin workflows.
+
+### Image Watermarking Tool
+A Python desktop tool for adding text or logo watermarks to images and PDFs. It also has batch processing, image adjustments, metadata options, optional encryption, and a separate verifier.
+
+### SRGPC Mobile App
+A mobile version of the certificate system with Google sign-in, permissions, certificate downloads, and a mobile-friendly interface.
+
+## How the portfolio works
+
+The React app handles the UI and the animations. The Flask API handles the database side of the site.
+
+```
 Browser
-   │
-   ▼
-Vercel
-React / Vite frontend
-   │
-   │ /api/*
-   ▼
-Render
-Flask REST API
-   │
-   ▼
-Supabase PostgreSQL
+   ↓
+Vercel / React
+   ↓
+Flask API
+   ↓
+PostgreSQL
 ```
 
-The portfolio uses a dedicated Supabase PostgreSQL database. It is separate from the database used by the SRGPC Certificate System.
-
-## What the project demonstrates
-
-- Responsive portfolio UI with a motion-first visual system.
-- Scroll-driven cinematic sections and interactive transitions.
-- Project showcase for:
-  - **SRGPC Certificate System** — full-stack certificate workflow with requests, digital signatures, unique IDs, QR verification, downloads, and admin/student workflows.
-  - **Image Watermarking Tool** — Python desktop watermarking/verifier workflow with image/PDF processing, batch operations, metadata controls, and optional encryption.
-  - **SRGPC Mobile App** — mobile certificate experience with Google sign-in, permissions, downloads, and mobile UI.
-- Capability section covering frontend, backend, data, authentication, AI-assisted development, and deployment.
-- Contact/inquiry form backed by Flask and PostgreSQL.
-- Database health endpoint for deployment verification.
-- Production deployment split across Vercel and Render.
-- Environment-based configuration with secrets kept outside the repository.
-
-## API
-
-### `GET /api/health`
-
-Returns API and database health.
-
-Example:
-
-```json
-{
-  "status": "ok",
-  "database": "connected"
-}
-```
-
-### `GET /api/portfolio`
-
-Returns project and capability data from PostgreSQL.
-
-### `POST /api/contact`
-
-Validates and stores a portfolio inquiry in PostgreSQL.
-
-Request body:
-
-```json
-{
-  "name": "Jane Doe",
-  "email": "jane@example.com",
-  "message": "I would like to discuss a project."
-}
-```
-
-## Database design
-
-The Flask backend creates its portfolio tables inside the **`portfolio` PostgreSQL schema**:
+The database has three small tables:
 
 - `projects`
 - `capabilities`
 - `inquiries`
 
-The schema is created only when the configured `DATABASE_URL` is available.
+If no database connection is available, the API can still serve the portfolio using the fallback project data in `backend/app.py`.
 
-## Local development
+## Running it locally
 
-### 1. Backend
+### Backend
 
-From the repository root:
+From the project root:
 
 ```bash
 python -m venv .venv
 ```
 
-Activate the environment and install dependencies:
+Activate the virtual environment and install the Python packages:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Set environment variables using `.env` or your shell:
+Create a `.env` file (or set the variables in your shell):
 
 ```text
 DATABASE_URL=postgresql://user:password@localhost:5432/personal_portfolio
 CORS_ORIGINS=http://localhost:5173
 ```
 
-Start Flask:
+Then start Flask:
 
 ```bash
 python backend/app.py
 ```
 
-The API runs at `http://localhost:5000`.
+The API will be available at `http://localhost:5000`.
 
-### 2. Frontend
-
-The Vercel deployment uses the `frontend/` directory as its project root.
+### Frontend
 
 ```bash
 cd frontend
@@ -138,7 +101,7 @@ npm install
 npm run dev
 ```
 
-Vite will start the development server, normally at `http://localhost:5173`.
+Vite normally starts at `http://localhost:5173`.
 
 For a production build:
 
@@ -146,74 +109,59 @@ For a production build:
 npm run build
 ```
 
-## Environment variables
+## API endpoints
 
-`DATABASE_URL` is a secret database connection string and must never be committed.
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `/api/health` | Check the API/database |
+| GET | `/api/portfolio` | Get project and capability data |
+| POST | `/api/contact` | Save a contact enquiry |
 
-`CORS_ORIGINS` should contain the allowed frontend origin(s).
+Example contact request:
 
-`VITE_API_URL` can be used for local development when the frontend needs to target a non-default API host. In production, Vercel rewrites `/api/*` to the Render backend through `frontend/vercel.json`.
-
-## Deployment
-
-### Frontend — Vercel
-
-The Vercel project is configured with:
-
-- **Root Directory:** `frontend`
-- **Framework:** Vite
-- **Build command:** `npm run build`
-- **Output directory:** `dist`
-
-### Backend — Render
-
-The Render service runs the Flask API using the repository's Dockerfile and Gunicorn.
-
-Production environment variables include:
-
-- `DATABASE_URL` — Supabase PostgreSQL connection string
-- `CORS_ORIGINS` — production Vercel URL
+```json
+{
+  "name": "Jane Doe",
+  "email": "jane@example.com",
+  "message": "I'd like to discuss a project."
+}
+```
 
 ## Project structure
 
 ```text
 personal-portfolio/
 ├── backend/
-│   └── app.py                 # Flask API + PostgreSQL integration
+│   └── app.py
 ├── frontend/
 │   ├── src/
-│   │   ├── main.jsx          # React application
-│   │   └── styles.css        # Portfolio styling and motion system
+│   │   ├── main.jsx
+│   │   └── styles.css
 │   ├── index.html
 │   ├── package.json
-│   └── vercel.json            # Vercel API rewrite
-├── src/                       # Render-compatible root frontend copy
-├── index.html
-├── package.json
+│   └── vercel.json
 ├── Dockerfile
 ├── Procfile
-├── requirements.txt
 ├── render.yaml
+├── requirements.txt
 ├── .env.example
 ├── .gitignore
 └── README.md
 ```
 
-## Submission summary
+## A couple of notes
 
-This project satisfies a full-stack web-development brief requiring:
+- The database URL is kept out of GitHub.
+- `CORS_ORIGINS` needs to match the frontend URL in production.
+- Vercel rewrites `/api/*` requests to the Render backend.
+- The root `package.json` is kept for the Render/Docker build, while the actual Vite app lives in `frontend/`.
 
-- a React-based frontend,
-- a Flask backend,
-- a PostgreSQL database,
-- and deployment on a supported hosting platform.
+## About me
 
-The live deployment combines **Vercel + Render + Supabase PostgreSQL**.
-
-## Author
-
-**Shashwat Solanki**
+I'm Shashwat, a software developer/student who likes building things end-to-end and figuring out the annoying parts when something doesn't work.
 
 - GitHub: https://github.com/shazzxz
 - LinkedIn: https://www.linkedin.com/in/shashwat-solanki-80a326390/
 - Email: sashwat2005solanki@gmail.com
+
+If you spot something broken or have an idea for the site, feel free to open an issue.
