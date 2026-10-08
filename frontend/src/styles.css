@@ -707,7 +707,7 @@ footer{display:flex;justify-content:space-between;padding:26px 4vw;border-top:1p
 }
 
 
-/* V15 final polish */
+/* Final spacing and accessibility tweaks */
 .reactor-role-meta p{font-size:18px;line-height:1.58}
 .project-heading-meta{justify-content:flex-end}
 .project-frame-footer{justify-content:flex-end}
@@ -718,7 +718,7 @@ footer{display:flex;justify-content:space-between;padding:26px 4vw;border-top:1p
 }
 
 
-/* Full-stack contact workflow */
+/* Contact form */
 .inquiry-toggle{margin-top:22px;display:inline-flex;align-items:center;gap:10px;padding:12px 15px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.03);color:#eae6de;font:9px "DM Mono",monospace;letter-spacing:.12em;cursor:pointer;transition:transform .25s var(--ease),border-color .25s var(--ease),background .25s var(--ease)}
 .inquiry-toggle:hover{transform:translateY(-2px);border-color:rgba(169,149,255,.5);background:rgba(169,149,255,.07)}
 .inquiry-form{margin-top:24px;padding-top:24px;border-top:1px solid var(--soft);display:grid;gap:14px}
