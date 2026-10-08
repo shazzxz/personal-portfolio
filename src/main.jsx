@@ -557,7 +557,7 @@ function CapabilitiesReel({ capabilities: capabilityData = capabilities }) {
                     <p>{text}</p>
                   </div>
                   <div className="cap-item-shape">
-                    <span>{title.slice(0, 1)}</span>
+                    <span>{String(title || "").slice(0, 1)}</span>
                     <i />
                     <i />
                     <i />
@@ -703,8 +703,35 @@ function App() {
       })
       .then((payload) => {
         if (cancelled) return;
-        if (Array.isArray(payload.projects) && payload.projects.length) setProjectData(payload.projects);
-        if (Array.isArray(payload.capabilities) && payload.capabilities.length) setCapabilityData(payload.capabilities);
+        const incomingProjects = Array.isArray(payload.projects)
+          ? payload.projects
+              .filter((project) => project && typeof project === "object")
+              .map((project, index) => ({
+                ...project,
+                number: String(project.number ?? String(index + 1).padStart(2, "0")),
+                title: String(project.title ?? ""),
+                label: String(project.label ?? ""),
+                summary: String(project.summary ?? ""),
+                chips: Array.isArray(project.chips) ? project.chips.map((chip) => String(chip)) : [],
+                metric: String(project.metric ?? ""),
+                metricLabel: String(project.metricLabel ?? project.metric_label ?? ""),
+                shape: String(project.shape ?? "certificate"),
+              }))
+              .filter((project) => project.title && project.shape)
+          : [];
+        const incomingCapabilities = Array.isArray(payload.capabilities)
+          ? payload.capabilities
+              .filter((capability) => capability && typeof capability === "object")
+              .map((capability, index) => ({
+                number: String(capability.number ?? String(index + 1).padStart(2, "0")),
+                title: String(capability.title ?? ""),
+                summary: String(capability.summary ?? ""),
+              }))
+              .filter((capability) => capability.title)
+          : [];
+
+        if (incomingProjects.length) setProjectData(incomingProjects);
+        if (incomingCapabilities.length) setCapabilityData(incomingCapabilities);
       })
       .catch(() => {})
       ;
