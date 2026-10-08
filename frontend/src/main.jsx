@@ -51,7 +51,7 @@ const capabilities = [
   ["02", "Backend", "Python, APIs, application logic"],
   ["03", "Data", "Database integration, structured workflows"],
   ["04", "Auth", "Google sign-in, sessions, user flows"],
-  ["05", "AI", "AI-assisted development and debugging"],
+  ["05", "Tools", "Git, debugging, AI tools"],
   ["06", "Deploy", "GitHub, cloud deployment, app packaging"],
 ];
 
@@ -242,7 +242,7 @@ function ReactorIntro() {
             <span>DEVELOPER</span>
           </div>
           <div className="reactor-role-meta">
-            <p>I build digital products where code, interfaces and motion work as one system.</p>
+            <p>I like building full-stack projects and fixing the small details that usually get missed.</p>
           </div>
         </div>
 
@@ -587,7 +587,7 @@ function AboutSection() {
           </p>
           <p>
             My work spans frontend, backend, databases, authentication, QR
-            verification, mobile apps, deployment and AI-assisted development.
+            verification, mobile apps and deployment.
           </p>
           <div className="principles">
             {[

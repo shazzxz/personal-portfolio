@@ -1,12 +1,12 @@
 # Shashwat Solanki — Portfolio
 
-This is my personal portfolio site. I built it to have somewhere to show the projects I've actually been working on, instead of keeping everything scattered across GitHub.
+This is my personal portfolio site. I built it as a place to show the projects I'm working on and keep the links to everything in one place.
 
-The site is intentionally pretty visual and motion-heavy, but there is a real backend behind it too. The contact form stores enquiries in PostgreSQL and the project/capability data can be loaded from the API.
+The frontend is a React/Vite app with custom CSS and scroll-based animations. A small Flask API handles portfolio data and contact enquiries, with PostgreSQL behind it.
 
 ## Live
 
-- Portfolio: https://personal-portfolio-coyote-f495.vercel.app
+- Website: https://personal-portfolio-coyote-f495.vercel.app
 - API: https://personal-portfolio-live-mvff.onrender.com
 - GitHub: https://github.com/shazzxz/personal-portfolio
 
@@ -16,7 +16,6 @@ The site is intentionally pretty visual and motion-heavy, but there is a real ba
 - React
 - Vite
 - CSS
-- A bunch of custom scroll/motion effects
 
 **Backend**
 - Python
@@ -25,73 +24,60 @@ The site is intentionally pretty visual and motion-heavy, but there is a real ba
 - psycopg
 
 **Hosting**
-- Vercel for the frontend
-- Render for the Flask API
-- Supabase for PostgreSQL
+- Vercel
+- Render
+- Supabase
 
-## Projects shown
+## Projects
 
 ### SRGPC Certificate System
-A certificate management system I built for college work. It covers student requests, certificate generation, digital signatures, unique IDs, QR verification, downloads, and separate student/admin workflows.
+A college certificate system for student requests, certificate generation, digital signatures, unique IDs, QR verification and downloads.
 
 ### Image Watermarking Tool
-A Python desktop tool for adding text or logo watermarks to images and PDFs. It also has batch processing, image adjustments, metadata options, optional encryption, and a separate verifier.
+A Python desktop app for watermarking images and PDFs. It includes batch processing, image adjustments, metadata options, optional encryption and a verifier.
 
 ### SRGPC Mobile App
-A mobile version of the certificate system with Google sign-in, permissions, certificate downloads, and a mobile-friendly interface.
+The mobile version of the certificate platform with Google sign-in, permissions and certificate downloads.
 
-## How the portfolio works
+## API
 
-The React app handles the UI and the animations. The Flask API handles the database side of the site.
+| Method | Endpoint | What it does |
+|---|---|---|
+| GET | `/api/health` | Checks the API and database |
+| GET | `/api/portfolio` | Returns project and capability data |
+| POST | `/api/contact` | Stores a contact enquiry |
 
-```
-Browser
-   ↓
-Vercel / React
-   ↓
-Flask API
-   ↓
-PostgreSQL
-```
-
-The database has three small tables:
+The database uses a `portfolio` schema with three tables:
 
 - `projects`
 - `capabilities`
 - `inquiries`
 
-If no database connection is available, the API can still serve the portfolio using the fallback project data in `backend/app.py`.
+The backend also has fallback project data, so the portfolio can still load when a database connection is not available during local development.
 
 ## Running it locally
 
 ### Backend
 
-From the project root:
+Create a virtual environment and install the Python dependencies:
 
 ```bash
 python -m venv .venv
-```
-
-Activate the virtual environment and install the Python packages:
-
-```bash
 pip install -r requirements.txt
 ```
 
-Create a `.env` file (or set the variables in your shell):
+Set the variables in `.env` (or your shell):
 
 ```text
 DATABASE_URL=postgresql://user:password@localhost:5432/personal_portfolio
 CORS_ORIGINS=http://localhost:5173
 ```
 
-Then start Flask:
+Then run:
 
 ```bash
 python backend/app.py
 ```
-
-The API will be available at `http://localhost:5000`.
 
 ### Frontend
 
@@ -109,23 +95,13 @@ For a production build:
 npm run build
 ```
 
-## API endpoints
+## Deployment
 
-| Method | Endpoint | Purpose |
-|---|---|---|
-| GET | `/api/health` | Check the API/database |
-| GET | `/api/portfolio` | Get project and capability data |
-| POST | `/api/contact` | Save a contact enquiry |
+The public site runs from Vercel and the Flask API runs on Render. Supabase provides the PostgreSQL database.
 
-Example contact request:
+The Vercel project uses `frontend/` as its root directory. Render uses the root Dockerfile and builds the frontend before starting Gunicorn.
 
-```json
-{
-  "name": "Jane Doe",
-  "email": "jane@example.com",
-  "message": "I'd like to discuss a project."
-}
-```
+Secrets such as `DATABASE_URL` are kept in the hosting provider settings and are not committed to the repository.
 
 ## Project structure
 
@@ -146,22 +122,15 @@ personal-portfolio/
 ├── requirements.txt
 ├── .env.example
 ├── .gitignore
+├── .dockerignore
+├── LICENSE
 └── README.md
 ```
 
-## A couple of notes
+## Contact
 
-- The database URL is kept out of GitHub.
-- `CORS_ORIGINS` needs to match the frontend URL in production.
-- Vercel rewrites `/api/*` requests to the Render backend.
-- The root `package.json` is kept for the Render/Docker build, while the actual Vite app lives in `frontend/`.
+GitHub: https://github.com/shazzxz
 
-## About me
+LinkedIn: https://www.linkedin.com/in/shashwat-solanki-80a326390/
 
-I'm Shashwat, a software developer/student who likes building things end-to-end and figuring out the annoying parts when something doesn't work.
-
-- GitHub: https://github.com/shazzxz
-- LinkedIn: https://www.linkedin.com/in/shashwat-solanki-80a326390/
-- Email: sashwat2005solanki@gmail.com
-
-If you spot something broken or have an idea for the site, feel free to open an issue.
+Email: sashwat2005solanki@gmail.com

@@ -32,7 +32,7 @@ FALLBACK_CAPABILITIES = [
     {"number": "02", "title": "Backend", "summary": "Python, APIs, application logic", "sortOrder": 2},
     {"number": "03", "title": "Data", "summary": "Database integration, structured workflows", "sortOrder": 3},
     {"number": "04", "title": "Auth", "summary": "Google sign-in, sessions, user flows", "sortOrder": 4},
-    {"number": "05", "title": "AI", "summary": "AI-assisted development and debugging", "sortOrder": 5},
+    {"number": "05", "title": "Tools", "summary": "Git, debugging, AI tools", "sortOrder": 5},
     {"number": "06", "title": "Deploy", "summary": "GitHub, cloud deployment, app packaging", "sortOrder": 6},
 ]
 
@@ -41,19 +41,16 @@ app.config["MAX_CONTENT_LENGTH"] = 16 * 1024
 origins = [origin.strip() for origin in os.getenv("CORS_ORIGINS", "*").split(",") if origin.strip()]
 CORS(app, resources={r"/api/*": {"origins": origins or ["*"]}})
 
-
 def db_connect():
     url = os.getenv("DATABASE_URL")
     if not url:
         return None
     return psycopg.connect(url)
 
-
 def set_portfolio_schema(conn):
     with conn.cursor() as cur:
         cur.execute("CREATE SCHEMA IF NOT EXISTS portfolio")
         cur.execute("SET search_path TO portfolio")
-
 
 def init_db():
     conn = db_connect()
@@ -135,7 +132,6 @@ def init_db():
                     (capability["number"], capability["title"], capability["summary"], capability["sortOrder"]),
                 )
 
-
 def get_projects():
     conn = db_connect()
     if conn is None:
@@ -155,7 +151,6 @@ def get_projects():
         for r in rows
     ] or FALLBACK_PROJECTS
 
-
 def get_capabilities():
     conn = db_connect()
     if conn is None:
@@ -169,8 +164,6 @@ def get_capabilities():
         {"number": r[0], "title": r[1], "summary": r[2], "sortOrder": r[3]}
         for r in rows
     ] or FALLBACK_CAPABILITIES
-
-
 
 @app.after_request
 def security_headers(response):
@@ -193,11 +186,9 @@ def health():
         db_ok = False
     return jsonify({"status": "ok", "database": "connected" if db_ok else "fallback"})
 
-
 @app.get("/api/portfolio")
 def portfolio():
     return jsonify({"projects": get_projects(), "capabilities": get_capabilities()})
-
 
 @app.post("/api/contact")
 def create_inquiry():
@@ -223,7 +214,6 @@ def create_inquiry():
             inquiry_id = cur.fetchone()[0]
     return jsonify({"ok": True, "id": inquiry_id}), 201
 
-
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
 def serve_frontend(path):
@@ -237,11 +227,10 @@ def serve_frontend(path):
         return send_from_directory(DIST, "index.html")
     return jsonify({"message": "Frontend build not found. Run npm run build first."}), 503
 
-
 try:
     init_db()
 except Exception as exc:
     print(f"Database initialization warning: {exc}", flush=True)
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=int(os.getenv("PORT", "5000")), debug=True)
+    app.run(host="127.0.0.1", port=int(os.getenv("PORT", "5000")), debug=os.getenv("FLASK_DEBUG") == "1")

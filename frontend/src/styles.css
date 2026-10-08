@@ -512,7 +512,6 @@ footer{display:flex;justify-content:space-between;padding:26px 4vw;border-top:1p
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
 }
 
-/* Final project-specific polish */
 .watermark-board{
   position:absolute;
   left:51%;
@@ -606,7 +605,6 @@ footer{display:flex;justify-content:space-between;padding:26px 4vw;border-top:1p
   .watermark-stamp{left:72%;top:71%;width:118px}
 }
 
-/* Final V9 section-specific motion responsiveness */
 @keyframes cap-orbit{to{transform:rotate(360deg)}}
 @media(max-width:980px){
   .project-copy p{font-size:16px;line-height:1.7}
@@ -641,8 +639,6 @@ footer{display:flex;justify-content:space-between;padding:26px 4vw;border-top:1p
   .cap-footer{left:6vw;right:6vw}
 }
 
-/* V10 — SCROLL-CINEMATIC AURA INTRO */
-/* V12 — KINETIC NAME-FIRST INTRO */
 .kinetic-intro{height:320vh;position:relative;background:#060607;color:var(--white);border-bottom:1px solid rgba(255,255,255,.05);isolation:isolate}
 .kinetic-sticky{position:sticky;top:0;height:100vh;overflow:hidden;background:radial-gradient(circle at 50% 48%,rgba(169,149,255,.085),transparent 22%),linear-gradient(180deg,#070708 0%,#050506 62%,#0a0a0c 100%)}
 .kinetic-sticky:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,transparent 23%,rgba(0,0,0,.22) 58%,rgba(0,0,0,.58) 100%);pointer-events:none;z-index:10}
@@ -683,7 +679,6 @@ footer{display:flex;justify-content:space-between;padding:26px 4vw;border-top:1p
   .kinetic-sweep{left:6vw;right:6vw;bottom:8vh}.kinetic-scroll{bottom:3.8vh;font-size:7px}.kinetic-exit{right:6vw;bottom:5vh}.kinetic-exit b{font-size:11px}
 }
 
-/* V13 — TYPOGRAPHIC REACTOR INTRO */
 .reactor-intro{height:440vh;position:relative;background:#050506;color:var(--white);border-bottom:1px solid rgba(255,255,255,.06);isolation:isolate}
 .reactor-sticky{position:sticky;top:0;height:100vh;overflow:hidden;background:radial-gradient(circle at 50% 48%,rgba(124,101,255,.10),transparent 23%),linear-gradient(180deg,#060607 0%,#030304 68%,#08080a 100%);}
 .reactor-sticky:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,transparent 24%,rgba(0,0,0,.12) 52%,rgba(0,0,0,.7) 100%);pointer-events:none;z-index:18}
@@ -706,8 +701,6 @@ footer{display:flex;justify-content:space-between;padding:26px 4vw;border-top:1p
   .reactor-intro{height:310vh}.reactor-header{top:95px;left:6vw;right:6vw;display:block}.reactor-header span:last-child{display:block;margin-top:8px}.reactor-page-index{left:auto;right:6vw;top:21%;transform:none;flex-direction:column}.reactor-page-index i{width:42px;height:1px}.reactor-name-wrap{top:46%;width:110vw}.reactor-name{font-size:clamp(64px,17vw,116px);line-height:.78}.reactor-name-sub{font-size:7px;letter-spacing:.16em;margin-top:20px}.reactor-crosshair{width:78vw;height:78vw}.reactor-portal{width:100vw;height:100vw}.reactor-fragment{font-size:6.5px}.reactor-fragment:nth-of-type(n+7){display:none}.reactor-fragment:nth-of-type(1){left:7%!important;top:29%!important}.reactor-fragment:nth-of-type(2){left:auto!important;right:7%;top:24%!important}.reactor-fragment:nth-of-type(3){left:7%!important;top:69%!important}.reactor-fragment:nth-of-type(4){left:auto!important;right:7%;top:73%!important}.reactor-fragment:nth-of-type(5){left:42%!important;top:20%!important}.reactor-fragment:nth-of-type(6){left:38%!important;top:79%!important}.reactor-tunnel{width:120vw;height:82vh}.reactor-role{left:6vw;right:6vw;bottom:12vh;display:block}.reactor-role-title{font-size:clamp(49px,13vw,84px)}.reactor-role-meta{max-width:330px;margin-top:18px}.reactor-role-meta p{font-size:14px;line-height:1.55}.reactor-bottom-line{left:6vw;right:6vw;bottom:7.2vh}.reactor-scroll{bottom:3.1vh;font-size:7px}.reactor-exit{right:6vw;bottom:5vh}.reactor-exit b{font-size:11px}
 }
 
-
-/* Final spacing and accessibility tweaks */
 .reactor-role-meta p{font-size:18px;line-height:1.58}
 .project-heading-meta{justify-content:flex-end}
 .project-frame-footer{justify-content:flex-end}
@@ -716,7 +709,6 @@ footer{display:flex;justify-content:space-between;padding:26px 4vw;border-top:1p
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
   .cursor{display:none!important}
 }
-
 
 /* Contact form */
 .inquiry-toggle{margin-top:22px;display:inline-flex;align-items:center;gap:10px;padding:12px 15px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.03);color:#eae6de;font:9px "DM Mono",monospace;letter-spacing:.12em;cursor:pointer;transition:transform .25s var(--ease),border-color .25s var(--ease),background .25s var(--ease)}
