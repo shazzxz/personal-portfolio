@@ -1,28 +1,13 @@
 services:
   - type: web
-    name: personal-portfolio-api
-    runtime: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn --chdir backend app:app
+    name: personal-portfolio-live
+    runtime: docker
     plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
     envVars:
       - key: DATABASE_URL
-        fromDatabase:
-          name: personal-portfolio-db
-          property: connectionString
+        sync: false
       - key: CORS_ORIGINS
-        value: https://personal-portfolio.onrender.com
-
-  - type: static
-    name: personal-portfolio
-    buildCommand: npm install && npm run build
-    staticPublishPath: ./dist
-    envVars:
-      - key: VITE_API_URL
-        value: https://personal-portfolio-api.onrender.com
-
-databases:
-  - name: personal-portfolio-db
-    plan: free
-    databaseName: personal_portfolio
-    user: portfolio
+        value: https://personal-portfolio-coyote-f495.vercel.app
