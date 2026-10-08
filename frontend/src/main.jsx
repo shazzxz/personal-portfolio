@@ -144,8 +144,6 @@ function Icon({ name, size = 18 }) {
   return <svg {...props}>{paths[name]}</svg>;
 }
 
-
-
 function ReactorIntro() {
   const [ref, p] = useScrollProgress();
 
@@ -483,7 +481,6 @@ function WorkflowSection() {
     </section>
   );
 }
-
 
 function CapabilitiesReel({ capabilities: capabilityData = capabilities }) {
   const [ref, p] = useScrollProgress();
