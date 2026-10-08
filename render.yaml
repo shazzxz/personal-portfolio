@@ -1,0 +1,14 @@
+# Production API service
+services:
+  - type: web
+    name: personal-portfolio-live
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: CORS_ORIGINS
+        value: https://personal-portfolio-coyote-f495.vercel.app
